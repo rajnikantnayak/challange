@@ -38,7 +38,7 @@ public class AccountsService {
       throw new Exception("Transfer amount should not be less than zero");
     }
 
-    if(fromAccount.getBalance().compareTo(transfer.getBalance()) > 0) {
+    if(fromAccount.getBalance().compareTo(transfer.getBalance()) < 0) {
       throw new Exception("From account does not have sufficient balance to transfer");
     }
 

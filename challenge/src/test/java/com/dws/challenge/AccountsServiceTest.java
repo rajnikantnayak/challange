@@ -79,7 +79,7 @@ class AccountsServiceTest {
     fromAccount.setBalance(new BigDecimal(1200));
     transferModal.setFromAccountId(fromAccount.getAccountId());
     transferModal.setToAccountId(toAccount.getAccountId());
-    transferModal.setBalance(new BigDecimal(100));
+    transferModal.setBalance(new BigDecimal(10000));
 
     assertThrows(Exception.class, () -> {
       accountsService.transferBalances(transferModal);
