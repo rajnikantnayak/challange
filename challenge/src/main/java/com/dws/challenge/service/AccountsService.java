@@ -7,6 +7,8 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class AccountsService {
 
@@ -32,8 +34,12 @@ public class AccountsService {
 
     Account toAccount = accountsRepository.getAccount(transfer.getToAccountId());
 
-    if(fromAccount.getBalance().compareTo(transfer.getBalance()) < 0) {
-      throw new Exception("Transfer amount is less than zero");
+    if(transfer.getBalance().compareTo(BigDecimal.ZERO) < 0){
+      throw new Exception("Transfer amount should not be less than zero");
+    }
+
+    if(fromAccount.getBalance().compareTo(transfer.getBalance()) > 0) {
+      throw new Exception("From account does not have sufficient balance to transfer");
     }
 
     fromAccount.setBalance(fromAccount.getBalance().subtract(transfer.getBalance()));

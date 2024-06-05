@@ -73,15 +73,28 @@ class AccountsServiceTest {
   }
 
   @Test()
-  public void testNegativeAmountTransfer() throws Exception {
+  public void testNegativeScenario() {
 
     TransferModal transferModal = new TransferModal();
-    fromAccount.setBalance(new BigDecimal(-100));
+    fromAccount.setBalance(new BigDecimal(1200));
     transferModal.setFromAccountId(fromAccount.getAccountId());
     transferModal.setToAccountId(toAccount.getAccountId());
     transferModal.setBalance(new BigDecimal(100));
 
-    Exception exception = assertThrows(Exception.class, () -> {
+    assertThrows(Exception.class, () -> {
+      accountsService.transferBalances(transferModal);
+    });
+  }
+
+  @Test()
+  public void testNegativeBalanceScenario() {
+
+    TransferModal transferModal = new TransferModal();
+    transferModal.setFromAccountId(fromAccount.getAccountId());
+    transferModal.setToAccountId(toAccount.getAccountId());
+    transferModal.setBalance(new BigDecimal(-100));
+
+    assertThrows(Exception.class, () -> {
       accountsService.transferBalances(transferModal);
     });
   }
